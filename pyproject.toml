@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "zeroml"
+version = "0.1.0"
+description = "ML library built from scratch using NumPy"
+requires-python = ">=3.13"
+dependencies = ["numpy"]
+
+[project.optional-dependencies]
+dev = ["pytest", "matplotlib", "jupyter"]
