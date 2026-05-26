@@ -10,6 +10,7 @@ Built to deeply understand ML fundamentals — no TensorFlow, no PyTorch, no sci
 
 - [x] Project Foundation
 - [x] Feature Scaling (MaxScale, Normalization, Standardization)
+- [x] Math Utilities (clip, to_2d_column)
 - [ ] Activations
 - [ ] Loss Functions
 - [ ] Linear Regression
