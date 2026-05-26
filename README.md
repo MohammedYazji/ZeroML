@@ -9,6 +9,7 @@ Built to deeply understand ML fundamentals — no TensorFlow, no PyTorch, no sci
 ## Roadmap
 
 - [x] Project Foundation
+- [x] Feature Scaling (MaxScale, Normalization, Standardization)
 - [ ] Activations
 - [ ] Loss Functions
 - [ ] Linear Regression
