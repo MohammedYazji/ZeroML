@@ -11,10 +11,11 @@ Built to deeply understand ML fundamentals — no TensorFlow, no PyTorch, no sci
 - [x] Project Foundation
 - [x] Feature Scaling (MaxScale, Normalization, Standardization)
 - [x] Math Utilities (clip, to_2d_column)
+- [x] LinearRegression (skeleton + predict)
+- [ ] Gradient Descent (train LinearRegression)
+- [ ] Logistic Regression
 - [ ] Activations
 - [ ] Loss Functions
-- [ ] Linear Regression
-- [ ] Logistic Regression
 - [ ] Optimizers (SGD, Adam)
 - [ ] Neural Network
 
