@@ -1,6 +1,7 @@
 import numpy as np
 from zeroml.models.base import BaseModel
 from zeroml.core.math_utils import to_2d_column
+from zeroml.core.losses import MSE
 
 class LinearRegression(BaseModel):
     """
@@ -70,17 +71,53 @@ class LinearRegression(BaseModel):
     def fit(self, X, y):
         """
         Train the model using Gradient Descent.
-        For now: only initialize weights, without Gradient descent.
+        
+        Steps each iteration:
+            1. predict -> ŷ = X.w + b
+            2. Compute cost -> j = MSE(y, ŷ)
+            3. Compute gradient -> dj/dŷ = (1/m)(ŷ - y)
+            4. update x -> w = w - α . X.T . gradient
+            4. update b -> b = b - b - α . Σgradient
 
         Parameters:
         -----------
-            X : numpy array of shape (m_samples, n_features)
-            y : numpy array of shape (m_samples, 1)
+            X : numpy array of shape (m, n)
+            y : numpy array of shape (m, 1)
         """
+        # == Prepare data ==
         # Ensure X will be numpy array to use shape and @
         X = np.array(X, dtype=float)
-        # May user pass (m_samples,) as vector
+        # May user pass (m_samples,) as vector not matrix
         y = to_2d_column(np.array(y, dtype=float))
 
         m, n = X.shape
         self._initialize_weights(n)
+
+        loss = MSE()
+
+        for i in range(self.n_iterations):
+
+            # step 1 - predict
+            y_pred = self.predict(X)
+
+            # step 2 - compute cost and save it
+            cost = loss.compute(y_true=y, y_pred=y_pred)
+            self.cost_history.append(cost)
+
+            # step 3 - compute gradient
+            error = loss.gradient(y_true=y, y_pred=y_pred)
+
+            # step 4 - update weights
+            #  we need to us X.T to make number of columns in the first matrix to equal the number of rows in the second one
+            # dj/dw = dj/dŷ . dŷ/dw - while dj/dŷ is the error we calc - dŷ/dw is X
+            dw = X.T @ error
+            # dj/db = dj/dŷ . dŷ/db - while dj/dŷ is the error we calc - dŷ/db is 1
+            # then use sum cause b affects every prediction
+            db = np.sum(error)
+
+            # step 5 - gradient descent step
+            self.w = self.w - self.learning_rate * dw
+            self.b = self.b - self.learning_rate * db
+        
+        # to allow method chaining
+        return self
